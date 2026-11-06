@@ -40,9 +40,11 @@ http.createServer((req, res) => {
     res.writeHead(302, { Location: base });
     return res.end();
   }
-  let rel = decodeURIComponent(url.pathname.slice(base.length));
+  let rel;
+  try { rel = decodeURIComponent(url.pathname.slice(base.length)); } catch { res.writeHead(400); return res.end(); }
   let file = path.join(outDir, rel);
-  if (!file.startsWith(outDir)) { res.writeHead(403); return res.end(); }
+  const inside = path.relative(outDir, file);
+  if (inside.startsWith('..') || path.isAbsolute(inside)) { res.writeHead(403); return res.end(); }
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) {
     if (!url.pathname.endsWith('/')) { res.writeHead(301, { Location: url.pathname + '/' }); return res.end(); }
     file = path.join(file, 'index.html');
@@ -50,7 +52,7 @@ http.createServer((req, res) => {
   if (!fs.existsSync(file)) { res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }); return res.end('Ikke fundet'); }
   res.writeHead(200, { 'Content-Type': TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
   fs.createReadStream(file).pipe(res);
-}).listen(PORT, () => {
+}).listen(PORT, '127.0.0.1', () => {  // kun denne maskine
   console.log(`\nUdviklingsserver: http://localhost:${PORT}${base}`);
   console.log('Ændringer i content/, assets/ og site.config.json bygges automatisk. Stop med Ctrl+C.\n');
 });
