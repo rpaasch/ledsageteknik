@@ -1,0 +1,32 @@
+{
+  "appName": "Ledsageteknik",
+  "shortName": "Ledsageteknik",
+  "description": "Ledsageteknik for personer med blindhed og deres ledsagere – sådan følges man sikkert ad.",
+  "version": "1.0.0",
+  "basePath": "/ledsageteknik/",
+  "themeColor": "#00594f",
+  "backgroundColor": "#ffffff",
+  "menu": "tiles",
+  "icon": "assets/icon.svg",
+  "footer": {
+    "colophon": "Ledsageteknik – en guide til personer med blindhed og deres ledsagere.",
+    "publisher": "Udgivet af IBOS – Instituttet for Blinde og Svagsynede"
+  },
+  "pages": {
+    "search": {
+      "slug": "soeg",
+      "title": "Søg"
+    },
+    "install": {
+      "slug": "installer",
+      "title": "Installér appen"
+    }
+  },
+  "images": {
+    "widths": [
+      640,
+      1280
+    ],
+    "quality": 78
+  }
+}

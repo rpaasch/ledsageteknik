@@ -1,0 +1,43 @@
+# .htaccess til appens mappe, hvis appen lægges på et Apache-webhotel via SFTP.
+# Sætter MIME-typer og cache-headers (GitHub Pages bruger ikke denne fil).
+
+Options -Indexes
+DirectoryIndex index.html
+DirectorySlash On
+
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType image/webp                .webp
+  AddType image/svg+xml             .svg
+  AddType application/json          .json
+  AddType text/javascript           .js
+  AddCharset utf-8 .html .css .js .json .webmanifest .svg
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+
+  # HTML, manifest, søgeindeks, CSS og JS: altid genvalidér (navnene ændres ikke mellem versioner).
+  <FilesMatch "\.(html|webmanifest|json|css|js)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  # Service worker: må aldrig caches, og må styre hele appens mappe.
+  <Files "sw.js">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Service-Worker-Allowed "./"
+  </Files>
+
+  # Optimerede billeder har indholds-hash i navnet og kan caches i et år.
+  <FilesMatch "\.(webp|jpe?g|png|gif|avif|pdf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# Ikoner har faste navne – cache en uge.
+<IfModule mod_headers.c>
+  <If "%{REQUEST_URI} =~ m#/icons/#">
+    Header set Cache-Control "public, max-age=604800"
+  </If>
+</IfModule>
+
