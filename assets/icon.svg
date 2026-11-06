@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Ikon: to personer, der går sammen (ledsager og person med blindhed). Motivet holdes inden for den midterste cirkel, så ikonet også virker som "maskable". -->
+  <rect width="512" height="512" fill="#00594f"/>
+  <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="24">
+    <circle cx="206" cy="140" r="32" fill="#ffffff" stroke="none"/>
+    <path d="M206 190 L206 296 L180 390"/>
+    <path d="M206 296 L236 390"/>
+    <path d="M206 214 L170 280"/>
+    <path d="M206 214 L250 252"/>
+    <circle cx="300" cy="150" r="30" fill="#ffffff" stroke="none"/>
+    <path d="M300 198 L304 300 L282 390"/>
+    <path d="M304 300 L334 390"/>
+    <path d="M300 220 L262 248"/>
+    <path d="M300 220 L338 280"/>
+  </g>
+</svg>
